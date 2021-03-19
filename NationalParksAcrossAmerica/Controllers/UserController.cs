@@ -78,6 +78,7 @@ namespace NationalParksAcrossAmerica.Controllers
             return View(reg);
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             // Check if user already logged in
@@ -92,28 +93,27 @@ namespace NationalParksAcrossAmerica.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            if (!ModelState.IsValid) { return View(model); }
+
+            //UserAccount account = await (from u in _context.Accounts
+            //                             where (u.Username == logger.UsernameOrEmail 
+            //                             u.Email == logger.UsernameOrEmail) &&
+            //                             u.Password == logger.Password
+            //                             select u).SingleOrDefaultAsync();
 
             UserAccount account =
-                       await (from u in _context.Users
-                              where (u.Username == model.UsernameOrEmail
-                                 || u.Email == model.UsernameOrEmail)
-                                 && u.Password == model.Password
-                              select u).SingleOrDefaultAsync();
+                await (_context.Users
+                    .Where(ua => (ua.Username == model.UsernameOrEmail ||
+                                ua.Email == model.UsernameOrEmail) &&
+                                ua.Password == model.Password)
+                .SingleOrDefaultAsync());
 
             if (account == null)
             {
-                // credential did not match
-
-                // Custom error msg
-                ModelState.AddModelError(string.Empty, "Credential were not found");
+                ModelState.AddModelError(string.Empty, "Credentials were not found");
 
                 return View(model);
             }
-
             LogUserIn(account.UserId);
 
             return RedirectToAction("Index", "Home");

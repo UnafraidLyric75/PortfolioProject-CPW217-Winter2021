@@ -1,4 +1,29 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.EntityFrameworkCore
+
+
+@inject IHttpContextAccessor sessionData
+@inject NationalParksAcrossAmerica.Data.ApplicationDbContext db
+@{
+    int? userId = sessionData.HttpContext.Session.GetInt32("UserId");
+    string userName = null;
+
+    if (userId.HasValue)
+    {
+        if (sessionData.HttpContext.Session.GetString("Username") == null)
+        {
+            userName = await (from u in db.Users
+                              where u.UserId == userId
+                              select u.Username).SingleOrDefaultAsync();
+            sessionData.HttpContext.Session.SetString("Username", userName);
+        }
+        else
+        {
+            userName = sessionData.HttpContext.Session.GetString("Username");
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +53,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register</a>
                         </li>
                     </ul>
                 </div>
