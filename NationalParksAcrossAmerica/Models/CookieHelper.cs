@@ -50,18 +50,6 @@ namespace NationalParksAcrossAmerica.Models
             http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
         }
 
-        public static bool DoesExists(IHttpContextAccessor _httpContext,ParkModel p)
-        {
-            List<ParkModel> list = GetCartProducts(_httpContext);
-
-            if (list.Contains(p))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public static int GetTotalCartProducts(IHttpContextAccessor http)
         {
             List<ParkModel> cartProducts = GetCartProducts(http);

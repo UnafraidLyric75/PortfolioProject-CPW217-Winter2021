@@ -33,8 +33,9 @@ namespace NationalParksAcrossAmerica.Controllers
 
             // Get product from the database
             ParkModel p = await ParkDB.GetProductAsync(_context, id);
-
-            if (CookieHelper.DoesExists(_httpContext, p))
+            List<ParkModel> parks =  CookieHelper.GetCartProducts(_httpContext);
+            // stops same park from ebing added again
+            if (parks.Contains(p))
             {
                 TempData["Message"] = p.ParkName + " was already added successfully";
             }
@@ -43,7 +44,6 @@ namespace NationalParksAcrossAmerica.Controllers
                 CookieHelper.AddProductToCart(_httpContext, p);
                 TempData["Message"] = p.ParkName + " was added successfully";
             }
-
             // redirct back to prevoius page
             return Redirect(previosUrl);
         }
@@ -53,18 +53,6 @@ namespace NationalParksAcrossAmerica.Controllers
 
             // Get product from the database
             ParkModel p = await ParkDB.GetProductAsync(_context, id);
-
-            if (!CookieHelper.DoesExists(_httpContext, p))
-            {
-                // false output
-                CookieHelper.AddProductToCart(_httpContext, p);
-                TempData["Message"] = p.ParkName + " was added successfully";
-            }
-            else
-            {
-                //true output
-                TempData["Message"] = p.ParkName + " was already added successfully";
-            }
 
             // redirct back to prevoius page
             return Redirect(previosUrl);
