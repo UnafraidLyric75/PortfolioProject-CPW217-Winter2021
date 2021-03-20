@@ -1,0 +1,53 @@
+﻿@model IEnumerable<NationalParksAcrossAmerica.Models.ParkModel>
+
+@{
+    ViewData["Title"] = "ParkSummary";
+}
+
+<h1>ParkSummary</h1>
+
+@if (Model.Count() == 0)
+{
+    <h2>Your park list is empty</h2>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkNation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkType)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParkId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParkName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParkNation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParkType)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

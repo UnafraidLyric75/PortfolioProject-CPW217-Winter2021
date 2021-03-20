@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NationalParksAcrossAmerica.Data;
 
-namespace NationalParksAcrossAmerica.Data.Migrations
+namespace NationalParksAcrossAmerica.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210203043204_Intiail")]
-    partial class Intiail
+    [Migration("20210320025236_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,9 +32,6 @@ namespace NationalParksAcrossAmerica.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ParkNation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ParkState")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ParkType")
