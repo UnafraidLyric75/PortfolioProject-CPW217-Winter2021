@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NationalParksAcrossAmerica.Data;
 
-namespace NationalParksAcrossAmerica.Data.Migrations
+namespace NationalParksAcrossAmerica.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -30,9 +30,6 @@ namespace NationalParksAcrossAmerica.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ParkNation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ParkState")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ParkType")
