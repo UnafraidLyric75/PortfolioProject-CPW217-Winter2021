@@ -13,15 +13,13 @@ namespace NationalParksAcrossAmerica.Models
         const string CartCookie = "CartCookie";
 
         /// <summary>
-        /// returns the current list of cart products. If cart is empty 
-        /// an empty list will be returned
+        ///  gets all parks from the cookies
         /// </summary>
         /// <param name="http"></param>
-        /// <returns>An empty list if cart is empty</returns>
+        /// <returns></returns>
         public static List<ParkModel> GetCartProducts(IHttpContextAccessor http)
         {
 
-            // get existing cart items
             string existingItems = http.HttpContext.Request.Cookies[CartCookie];
 
             List<ParkModel> cartProducts = new List<ParkModel>();
@@ -33,6 +31,12 @@ namespace NationalParksAcrossAmerica.Models
             return cartProducts;
         }
 
+        /// <summary>
+        /// add new park to cookie
+        /// includes duplicates for some reason
+        /// </summary>
+        /// <param name="http"></param>
+        /// <param name="p"></param>
         public static void AddProductToCart(IHttpContextAccessor http, ParkModel p)
         {
             List<ParkModel> cartProducts = GetCartProducts(http);
@@ -50,6 +54,11 @@ namespace NationalParksAcrossAmerica.Models
             http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
         }
 
+        /// <summary>
+        /// gets all products from the cookie
+        /// </summary>
+        /// <param name="http"></param>
+        /// <returns></returns>
         public static int GetTotalCartProducts(IHttpContextAccessor http)
         {
             List<ParkModel> cartProducts = GetCartProducts(http);

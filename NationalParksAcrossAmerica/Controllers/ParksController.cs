@@ -19,6 +19,11 @@ namespace NationalParksAcrossAmerica.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// How mnay parks per page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(int? id)
         {
             int pageNum = id ?? 1;
@@ -32,10 +37,14 @@ namespace NationalParksAcrossAmerica.Controllers
             List<ParkModel> products = await ParkDB.GetProductsAsync(_context, PageSize, pageNum);
 
 
-            // Send list of products to view to be displayed
+            
             return View(products);
         }
 
+        /// <summary>
+        ///  adds a new park but doesnt work as whos going to make a natinal park
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Add()
         {
@@ -51,13 +60,20 @@ namespace NationalParksAcrossAmerica.Controllers
 
                 TempData["Message"] = $"{p.ParkName} was added successfully";
 
-                // redirect back to catalog page
+                
                 return RedirectToAction("Index");
             }
 
             return View();
         }
 
+        // The following actions are for admins only and have not been implemented yet
+
+        /// <summary>
+        /// lets you edit a 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -79,6 +95,11 @@ namespace NationalParksAcrossAmerica.Controllers
             return View(p);
         }
 
+        /// <summary>
+        /// lets you delete a park, if needed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -87,6 +108,11 @@ namespace NationalParksAcrossAmerica.Controllers
             return View(p);
         }
 
+        /// <summary>
+        /// just conforms you want that park deleted
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)

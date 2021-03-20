@@ -25,6 +25,11 @@ namespace NationalParksAcrossAmerica.Controllers
             return View();
         }
 
+        /// <summary>
+        /// creates a new users
+        /// </summary>
+        /// <param name="reg"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel reg)
         {
@@ -55,7 +60,7 @@ namespace NationalParksAcrossAmerica.Controllers
                     return View(reg);
                 }
 
-                // Map data to user account instance
+                
                 UserAccount acc = new UserAccount()
                 {
                     DateOfBirth = reg.DateOfBirth,
@@ -64,13 +69,13 @@ namespace NationalParksAcrossAmerica.Controllers
                     Username = reg.Username
                 };
 
-                // add to database
+                
                 _context.Users.Add(acc);
                 await _context.SaveChangesAsync();
 
                 LogUserIn(acc.UserId);
 
-                // redirect to home
+                
                 return RedirectToAction("Index", "Home");
 
             }
@@ -78,10 +83,14 @@ namespace NationalParksAcrossAmerica.Controllers
             return View(reg);
         }
 
+        /// <summary>
+        /// if username and password are coreect or exists it logs you in
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login()
         {
-            // Check if user already logged in
+            
             if (HttpContext.Session.GetInt32("UserId").HasValue)
             {
                 return RedirectToAction("Index", "Home");
@@ -95,11 +104,7 @@ namespace NationalParksAcrossAmerica.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
 
-            //UserAccount account = await (from u in _context.Accounts
-            //                             where (u.Username == logger.UsernameOrEmail 
-            //                             u.Email == logger.UsernameOrEmail) &&
-            //                             u.Password == logger.Password
-            //                             select u).SingleOrDefaultAsync();
+            
 
             UserAccount account =
                 await (_context.Users
@@ -121,13 +126,11 @@ namespace NationalParksAcrossAmerica.Controllers
 
         private void LogUserIn(int accountId)
         {
-            // Log user into website
             HttpContext.Session.SetInt32("UserId", accountId);
         }
 
         public IActionResult Logout()
         {
-            // removes all current session data
             HttpContext.Session.Clear();
 
             return RedirectToAction("Index", "Home");
