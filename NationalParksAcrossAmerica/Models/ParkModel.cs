@@ -24,10 +24,5 @@ namespace NationalParksAcrossAmerica.Models
         /// Which country the park is located in
         /// </summary>
         public string ParkNation { get; set; }
-
-        /// <summary>
-        /// where the park is in a state, ie Quebec, New York, Saxony, Wessex
-        /// </summary>
-        public string ParkState { get; set; }
     }
 }
