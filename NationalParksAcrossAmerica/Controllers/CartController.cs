@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
+
+/// <summary>
+/// nothing is finsihed here as i cant get does not exist to works at all,
+/// dont know why my logic it bad
+/// </summary>
 namespace NationalParksAcrossAmerica.Controllers
 {
     public class CartController : Controller
@@ -22,13 +27,13 @@ namespace NationalParksAcrossAmerica.Controllers
             _httpContext = httpContext;
         }
 
-
         /// <summary>
-        /// Add a product to the shopping cart
+        /// Adds item to visited list
         /// </summary>
-        /// <param name="id">The id of the product to add</param>
+        /// <param name="id"></param>
+        /// <param name="previosUrl"></param>
         /// <returns></returns>
-        public async Task<IActionResult> AddVisited(int id, string previosUrl) // Id of the product to add
+        public async Task<IActionResult> AddVisited(int id, string previosUrl)
         {
 
             // Get product from the database
@@ -48,7 +53,13 @@ namespace NationalParksAcrossAmerica.Controllers
             return Redirect(previosUrl);
         }
 
-        public async Task<IActionResult> AddWishToVisit(int id, string previosUrl) // Id of the product to add
+        /// <summary>
+        /// adds item to wish to vist list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="previosUrl"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AddWishToVisit(int id, string previosUrl)
         {
 
             // Get product from the database
